@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean class="com.xmcc.utils.SpringExceptionResolver"></bean>
+
+    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"></bean>
+
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
+
+    <!-- 配置视图解析器 -->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 设置静态资源不过滤 -->
+    <mvc:resources location="/css/" mapping="/css/**"/> <!-- 样 式 -->
+    <mvc:resources location="/assets/" mapping="/assets/**"/> <!-- 图 片 -->
+    <mvc:resources location="/js/" mapping="/js/**"/> <!-- javascript -->
+    <mvc:resources location="/ztree/" mapping="/ztree/**"/>
+    <mvc:resources location="/common/" mapping="/common/**"/>
+    <mvc:resources location="/bootstrap3.3.5/" mapping="/bootstrap3.3.5/**"/>
+
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 配置拦截路径-->
+            <mvc:mapping path="/sys/*"/>
+            <bean class="com.xmcc.utils.HttpInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
